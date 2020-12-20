@@ -15,6 +15,7 @@ from pysot.core.config import cfg
 from pysot.models.model_builder import ModelBuilder
 from pysot.tracker.tracker_builder import build_tracker
 
+import time
 torch.set_num_threads(1)
 
 parser = argparse.ArgumentParser(description='tracking demo')
@@ -82,6 +83,8 @@ def main():
         if first_frame:
             try:
                 init_rect = cv2.selectROI(video_name, frame, False, False)
+                count=0
+                starttime=time.time()
             except:
                 exit()
             tracker.init(frame, init_rect)
@@ -102,7 +105,13 @@ def main():
                               (bbox[0]+bbox[2], bbox[1]+bbox[3]),
                               (0, 255, 0), 3)
             cv2.imshow(video_name, frame)
-            cv2.waitKey(40)
+            count+=1
+            if cv2.waitKey(1) & 0xFF ==ord('q'):
+                break
+    endtime=time.time()
+    print("Frames:",count)
+    print("Time:",endtime-starttime)
+    print("FPS:",count/(endtime-starttime))
 
 
 if __name__ == '__main__':
