@@ -10,6 +10,7 @@ import os
 
 import cv2
 import torch
+import torch.nn as nn
 import numpy as np
 
 from pysot.core.config import cfg
@@ -45,6 +46,9 @@ def main():
 
     # create model
     model = ModelBuilder()
+
+    # parallel
+    # model = nn.DataParallel(model)
 
     # load model
     model = load_pretrain(model, args.snapshot).cuda().eval()

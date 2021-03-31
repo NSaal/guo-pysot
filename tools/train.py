@@ -163,6 +163,7 @@ def train(train_loader, model, optimizer, lr_scheduler, tb_writer):
     world_size = get_world_size()
     num_per_epoch = len(train_loader.dataset) // \
         cfg.TRAIN.EPOCH // (cfg.TRAIN.BATCH_SIZE * world_size)
+    # 什么意思？
     start_epoch = cfg.TRAIN.START_EPOCH
     epoch = start_epoch
 
